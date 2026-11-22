@@ -150,7 +150,7 @@ $("#err").textContent="";$("#src").textContent=u;$("#rs").textContent=u;run()});
 function run(){
 view("v-run");var i=0;
 function paint(){
-var h="";for(var k=0;k<STEPS.length;k++){h+='<li class="'+(k<i?"ok":k===i?"act":"")+'">'+STEPS[k]+'</li>'}
+var h="";for(var k=0;k<STEPS.length;k++){h+='<li class="'+(k<i?"ok":k===i?"act":"")+'">'+STEPS[k]+"</li>"}
 $("#steps").innerHTML=h;
 var p=Math.round(i/(STEPS.length-1)*100);$("#pb").style.width=p+"%";$(".bar").setAttribute("aria-valuenow",p)}
 paint();clearInterval(timer);
