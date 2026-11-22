@@ -199,78 +199,78 @@ dialog .ft{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
 <script>
 (function(){
 var $=function(s){return document.querySelector(s)};
+var REPO="aka645251-ai/gta-clipper",API="https://api.github.com";
+function tok(){try{return localStorage.getItem("gc_token")||""}catch(e){return""}}
+function setTok(v){try{if(v)localStorage.setItem("gc_token",v);else localStorage.removeItem("gc_token")}catch(e){}}
+function api(p,o){o=o||{};o.headers=Object.assign({"Accept":"application/vnd.github+json","Authorization":"Bearer "+tok(),"X-GitHub-Api-Version":"2022-11-28"},o.headers||{});return fetch(API+p,o)}
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
-var DEMO=[
-{t:"He did NOT expect that landing",h:"No way that worked",d:34,s:94,g:"#gta6 #insane #shorts",tr:"Okay okay okay, watch this. No way. There is no way that landed. Chat, did you see that?",b:[96,92,90,98]},
-{t:"Police chase goes completely wrong",h:"POV: the chase ends badly",d:38,s:91,g:"#gta6 #chase #funny",tr:"They are right behind me, I am turning here, oh no no no, that was the wrong street.",b:[93,88,89,94]},
-{t:"The stream chat lost it here",h:"Chat is going crazy",d:31,s:87,g:"#gta6 #clutch #gaming",tr:"Wait, wait, look at chat right now. Everyone is typing the same thing. This is insane.",b:[90,84,85,89]},
-{t:"Best heist moment so far",h:"This plan should not work",d:40,s:82,g:"#gta6 #heist #viral",tr:"Alright, here is the plan. We go in quiet, grab it and leave before the alarm. Easy.",b:[84,80,82,81]},
-{t:"Nobody saw this coming",h:"Wait, what is that?",d:36,s:76,g:"#gta6 #plot #shorts",tr:"Hold on, what is that over there? Is that part of the mission or is it a glitch?",b:[78,74,75,77]},
-{t:"Funniest crash of the night",h:"That was so close",d:33,s:69,g:"#gta6 #crash #lol",tr:"I had it. I actually had it. Why is the wall there. Who put the wall there.",b:[70,66,72,68]}];
-var STEPS=["Reading captions and chat","Ranking the top moments","Cutting the clips","Adding layout and captions","Ready"];
-var sel={},Q=[],timer=null,asp="9:16",editing=-1;
-function pane(id){["empty","run","res"].forEach(function(p){$("#"+p).hidden=p!==id});if(id!=="res")$("#dock").hidden=true}
+var dlg=document.createElement("dialog");
+dlg.innerHTML='<form method="dialog"><h3>Connect GitHub</h3><div class="f"><div><label for="tk">Personal access token (classic, scopes: repo + workflow). It stays in this browser only and goes nowhere except api.github.com.</label><input id="tk" type="password" autocomplete="off" placeholder="ghp_ ..."></div></div><div class="ft"><button class="btn" value="x" type="submit">Cancel</button><button class="btn pri" value="ok" type="submit">Save</button></div></form>';
+document.body.appendChild(dlg);
+var chip=document.createElement("a");
+chip.href="#";chip.textContent=tok()?"Connected":"Connect GitHub";
+document.querySelector("nav").appendChild(chip);
+chip.addEventListener("click",function(e){e.preventDefault();$("#tk").value=tok();dlg.showModal()});
+dlg.addEventListener("close",function(){if(dlg.returnValue!=="ok")return;var v=$("#tk").value.trim();if(!v)return;setTok(v);chip.textContent="Connected";$("#err").textContent=""});
+var poll=null,t0=0,jobId="",clipData=[];
+var STEPS=["Starting the engine","Reading captions","Picking the best moments","Cutting the clips","Ready"];
+function pane(id){["empty","run","res"].forEach(function(p){$("#"+p).hidden=p!==id});$("#dock").hidden=true}
 function okUrl(u){try{var h=new URL(u).hostname;return["youtube.com","www.youtube.com","m.youtube.com","youtu.be"].indexOf(h)>-1}catch(e){return false}}
-function val(n){var r=document.querySelector('input[name="'+n+'"]:checked');return r?r.value:""}
 function mmss(s){s=Math.round(s);return Math.floor(s/60)+":"+("0"+(s%60)).slice(-2)}
+function paint(i){var h="";for(var k=0;k<STEPS.length;k++){h+='<li class="'+(k<i?"ok":k===i?"act":"")+'">'+STEPS[k]+"</li>"}$("#steps").innerHTML=h;var p=Math.round(i/(STEPS.length-1)*100);$("#pb").style.width=p+"%";$(".bar").setAttribute("aria-valuenow",p)}
+function fail(m){clearInterval(poll);$("#fs").disabled=false;pane("empty");$("#err").textContent=m}
 $("#f").addEventListener("submit",function(e){
 e.preventDefault();var u=$("#url").value.trim();
 if(!okUrl(u)){$("#err").textContent="Paste a full YouTube link, like https://www.youtube.com/watch?v=...";$("#url").focus();return}
-$("#err").textContent="";$("#src").textContent=u;run()});
-function run(){
-$("#fs").disabled=true;pane("run");var i=0;
-function paint(){var h="";for(var k=0;k<STEPS.length;k++){h+='<li class="'+(k<i?"ok":k===i?"act":"")+'">'+STEPS[k]+"</li>"}
-$("#steps").innerHTML=h;var p=Math.round(i/(STEPS.length-1)*100);$("#pb").style.width=p+"%";$(".bar").setAttribute("aria-valuenow",p)}
-paint();clearInterval(timer);
-timer=setInterval(function(){i++;paint();if(i>=STEPS.length-1){clearInterval(timer);setTimeout(results,600)}},1500)}
+if(!tok()){$("#err").textContent="Connect GitHub first. Your token stays in this browser only.";dlg.showModal();return}
+$("#err").textContent="";startJob(u)});
+function startJob(u){
+var mode=$("#mode").value.indexOf("time range")>-1?"manual":"auto";
+var l=$("#len").value,secs=l.indexOf("40-60")>-1?50:l.indexOf("20-30")>-1?25:35;
+var count=Math.max(1,Math.min(10,parseInt($("#cnt").value,10)||6));
+var start=($("#from").value||"00:00:00").trim();
+jobId="web-"+Date.now();
+$("#fs").disabled=true;pane("run");paint(0);
+api("/repos/"+REPO+"/dispatches",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({event_type:"clip-request",client_payload:{url:u,job_id:jobId,mode:mode,start:start,seconds:secs,count:count}})}).then(function(r){
+if(r.status===204){$("#src").textContent=u;t0=Date.now();watch()}
+else if(r.status===401){fail("Token rejected (401). Open Connect GitHub and paste a fresh token.")}
+else if(r.status===403){fail("Token needs the workflow scope: classic token with repo + workflow, or fine-grained with Actions: write on gta-clipper.")}
+else{fail("The engine did not start (HTTP "+r.status+"). Try again in a minute.")}
+}).catch(function(){fail("The request did not leave the browser. Check your connection.")})}
+function watch(){
+var misses=0;
+poll=setInterval(function(){
+api("/repos/"+REPO+"/actions/runs?per_page=20").then(function(r){return r.json()}).then(function(d){
+var runs=(d.workflow_runs||[]).filter(function(w){return w.name==="Clip job"&&w.event==="repository_dispatch"&&new Date(w.created_at)>=new Date(t0-8000)});
+if(!runs.length){misses++;if(misses>20){fail("The engine run did not appear. Check the token scopes and try again.")}return}
+var w=runs[0];
+if(w.status==="completed"){clearInterval(poll);if(w.conclusion==="success"){paint(3);fetchResult(0)}else{fail("The engine run failed ("+w.conclusion+"). See the Actions tab of gta-clipper.")}}
+else{paint(w.status==="queued"?1:2)}
+}).catch(function(){})},15000)}
+function fetchResult(n){
+api("/repos/"+REPO+"/contents/jobs/"+jobId+".json",{headers:{"Accept":"application/vnd.github.raw+json"}}).then(function(r){
+if(r.status===200)return r.text();
+if(n<8){setTimeout(function(){fetchResult(n+1)},10000);return null}
+fail("The engine ran but the job result file is missing.");return null}).then(function(t){
+if(!t)return;var j;try{j=JSON.parse(t)}catch(e){fail("The job result could not be read.");return}show(j)}).catch(function(){fail("Fetching the job result failed. Try again.")})}
+function show(j){
+var clips=(j.clips||[]).filter(function(c){return c.status==="done"});
+clipData=clips;$("#fs").disabled=false;
+if(!clips.length){fail(j.error||"No clip was produced. Engine said: "+(j.error||"see jobs/"+jobId+".json"));return}
+paint(STEPS.length-1);
+$("#rt").textContent=clips.length+" clips ready";
+$("#rs").textContent=(j.title?j.title+" - ":"")+"job "+jobId+" - "+REPO;
+draw();pane("res");window.scrollTo({top:$("#res").offsetTop-90,behavior:"smooth"})}
+function draw(){var h="";for(var n=0;n<clipData.length;n++)h+=card(n);$("#grid").innerHTML=h;$("#grid").className="grid"}
 function card(n){
-var d=DEMO[n],c=d.s>=85?"":d.s>=72?"m":"l",names=["Hook","Flow","Value","Trend"],bars="";
-for(var k=0;k<4;k++){bars+='<div>'+names[k]+'<s><i style="width:'+d.b[k]+'%"></i></s><em>'+d.b[k]+'</em></div>'}
-var hk=$("#hook").checked?'<div class="hk">'+esc(d.h)+'</div>':"";
-return '<article class="clip'+(sel[n]?" sel":"")+'" id="c'+n+'"><div class="th"><div class="f">Facecam</div><div class="gm">Gameplay</div>'+hk+'<div class="c">'+esc(d.h)+'</div><span class="pill r">#'+(n+1)+'</span><span class="pill d">'+mmss(d.d)+'</span><input class="ck" type="checkbox" data-i="'+n+'"'+(sel[n]?" checked":"")+' aria-label="Select clip '+(n+1)+'"></div><div class="mt"><div class="sc"><div class="n '+c+'">'+d.s+'</div><small>Virality score<br>out of 99</small></div><div class="bb">'+bars+'</div><h3>'+esc(d.t)+'</h3><p class="hs">'+esc(d.g)+'</p><details class="tr"><summary>Transcript</summary><p>'+esc(d.tr)+'</p></details><div class="bt"><button class="btn" type="button" data-edit="'+n+'">Edit</button><button class="btn" type="button" aria-label="Download clip '+(n+1)+'">Download</button></div></div></article>'}
-function draw(){var h="";for(var n=0;n<DEMO.length;n++)h+=card(n);$("#grid").innerHTML=h;$("#grid").className="grid "+(asp==="1:1"?"a11":asp==="16:9"?"a169":"")}
-function results(){
-sel={};asp=val("asp");draw();
-$("#rt").innerHTML=DEMO.length+' clips ready<span class="tag">Demo data</span>';
-$("#rs").textContent=[val("lay"),asp,$("#len").value,$("#lng").value+" captions",val("sty"),$("#chn").value].join(" · ");
-$("#fs").disabled=false;pane("res");dock();window.scrollTo({top:$("#res").offsetTop-90,behavior:"smooth"})}
-function dock(){
-var n=Object.keys(sel).filter(function(k){return sel[k]}).length;
-$("#dock").hidden=n===0||$("#res").hidden;$("#sn").textContent=n+" selected";
-for(var i=0;i<DEMO.length;i++){var el=$("#c"+i);if(el)el.classList.toggle("sel",!!sel[i])}$("#msg").textContent=""}
-$("#grid").addEventListener("change",function(e){var t=e.target;if(t.classList&&t.classList.contains("ck")){sel[t.getAttribute("data-i")]=t.checked;dock()}});
-$("#grid").addEventListener("click",function(e){var b=e.target.closest("[data-edit]");if(!b)return;
-editing=Number(b.getAttribute("data-edit"));var d=DEMO[editing];
-$("#e1").value=d.t;$("#e2").value=d.h;$("#e3").value=d.g;$("#e4").value=0;$("#e5").value=d.d;$("#ed").showModal()});
-$("#ed").addEventListener("close",function(){
-if($("#ed").returnValue!=="ok"||editing<0)return;
-var d=DEMO[editing],a=Number($("#e4").value)||0,z=Number($("#e5").value)||0;
-d.t=$("#e1").value.trim()||d.t;d.h=$("#e2").value.trim()||d.h;d.g=$("#e3").value.trim();
-if(z>a)d.d=z-a;
-var keep=window.scrollY;draw();dock();window.scrollTo(0,keep);editing=-1});
-$("#all").addEventListener("click",function(){var all=Object.keys(sel).filter(function(k){return sel[k]}).length===DEMO.length;
-for(var i=0;i<DEMO.length;i++)sel[i]=!all;draw();dock()});
-$("#again").addEventListener("click",function(){clearInterval(timer);sel={};Q=[];qdraw();$("#url").value="";$("#fs").disabled=false;pane("empty");window.scrollTo({top:0,behavior:"smooth"})});
-function vis(){var v=$("#vis").value;$("#wt").hidden=v!=="s";$("#wg").hidden=v!=="s";$("#sch").textContent=v==="s"?"Schedule uploads":v==="p"?"Publish now":"Upload as private"}
-$("#vis").addEventListener("change",vis);vis();
-function qdraw(){
-$("#qs").hidden=Q.length===0;var h="";
-Q.forEach(function(q,i){h+='<tr><td>'+esc(q.t)+'</td><td>'+esc(q.ch)+'</td><td>'+esc(q.when)+'</td><td><span class="chip '+q.k+'">'+q.st+'</span></td><td><button class="btn sm" type="button" data-rm="'+i+'" aria-label="Remove from queue">Remove</button></td></tr>'});
-$("#qb").innerHTML=h}
-$("#qb").addEventListener("click",function(e){var b=e.target.closest("[data-rm]");if(!b)return;Q.splice(Number(b.getAttribute("data-rm")),1);qdraw()});
-$("#sch").addEventListener("click",function(){
-var ids=Object.keys(sel).filter(function(k){return sel[k]}).map(Number).sort(),v=$("#vis").value;
-if(!ids.length)return;
-var t=new Date($("#t0").value).getTime(),g=Number($("#gap").value)*3600000,f=new Intl.DateTimeFormat(undefined,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
-if(v==="s"&&!$("#t0").value){$("#msg").textContent="Pick the first publish time.";$("#t0").focus();return}
-ids.forEach(function(id,k){var d=DEMO[id];
-if(v==="s")Q.push({t:d.t,ch:$("#chn").value,when:f.format(new Date(t+k*g)),st:"Scheduled",k:"ok"});
-else if(v==="p")Q.push({t:d.t,ch:$("#chn").value,when:"Now",st:"Publishing",k:"pub"});
-else Q.push({t:d.t,ch:$("#chn").value,when:"Not scheduled",st:"Private",k:"warn"})});
-sel={};draw();dock();qdraw();
-$("#msg").textContent="Demo: "+ids.length+" clip"+(ids.length>1?"s":"")+" added to the upload queue.";
-$("#dock").hidden=false;$("#sn").textContent="0 selected";
-setTimeout(function(){$("#qs").scrollIntoView({behavior:"smooth",block:"center"});$("#dock").hidden=true},700)});
+var d=clipData[n],c=d.score>=8?"":d.score>=6?"m":"l";
+return '<article class="clip" id="c'+n+'"><div class="th"><div class="f">Facecam</div><div class="gm">Gameplay</div><div class="c">'+esc(d.title||"Clip "+(n+1))+'</div><span class="pill r">#'+(n+1)+'</span><span class="pill d">'+mmss(d.seconds)+'</span></div><div class="mt"><div class="sc"><div class="n '+c+'">'+d.score+'</div><small>Virality score<br>out of 10</small></div><h3>'+esc(d.title||"")+'</h3><p class="hs">'+esc((d.hashtags||[]).join(" "))+'</p><details class="tr"><summary>Why this moment</summary><p>'+esc(d.reason||"")+'</p></details><div class="bt"><button class="btn" type="button" data-dl="'+n+'">Download</button></div></div></article>'}
+$("#grid").addEventListener("click",function(e){var b=e.target.closest("[data-dl]");if(!b)return;
+var d=clipData[Number(b.getAttribute("data-dl"))];var old=b.textContent;b.textContent="Downloading...";
+api("/repos/"+REPO+"/contents/"+d.file,{headers:{"Accept":"application/vnd.github.raw+json"}}).then(function(r){if(!r.ok)throw 0;return r.blob()}).then(function(bl){
+var a=document.createElement("a");a.href=URL.createObjectURL(bl);a.download=d.file.split("/").pop();a.click();b.textContent=old}).catch(function(){b.textContent="Failed, try again";setTimeout(function(){b.textContent=old},2500)})});
+$("#all").hidden=true;
+$("#again").addEventListener("click",function(){clearInterval(poll);clipData=[];$("#url").value="";$("#fs").disabled=false;pane("empty");window.scrollTo({top:0,behavior:"smooth"})});
 })();
 </script>
 </body>
