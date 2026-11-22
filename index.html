@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>gta-clipper dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.app{display:grid;grid-template-columns:232px minmax(0,1fr);background:#0E1116;color:#E7EAEE;font:14px/1.5 Inter,system-ui,sans-serif}
+.side{background:#0B0E12;border-right:1px solid #1F2630;padding:24px 16px;display:flex;flex-direction:column;gap:28px}
+.brand{font-weight:700;font-size:17px;letter-spacing:.2px;padding:0 8px}.brand b{color:var(--a)}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav a{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:8px;color:#A9B3C1;text-decoration:none;min-height:24px}
+.nav a:hover{background:#151A21;color:#E7EAEE}
+.nav a.on{background:#18202A;color:#fff;font-weight:600}
+.nav i{font-style:normal;font-size:12px;background:#1F2630;color:#C4CCD8;border-radius:10px;padding:1px 8px}
+.side .foot{margin-top:auto;font-size:12px;color:#8B95A3;padding:0 8px}
+.main{padding:28px 36px 48px;display:flex;flex-direction:column;gap:24px;min-width:0}
+.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.top h1{margin:0;font-size:24px;font-weight:700;flex:1;min-width:180px}
+.badge{font-size:12px;color:#F2C14E;border:1px solid #4A3F1E;background:#221C0C;border-radius:6px;padding:3px 10px}
+input,select{background:#0E1116;border:1px solid #2A3341;color:#E7EAEE;border-radius:8px;padding:10px 12px;font:inherit;min-height:44px;box-sizing:border-box;width:100%}
+input:focus,select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+label{display:block;font-size:12px;color:#9AA5B4;margin-bottom:6px;font-weight:500}
+.search{width:260px}
+.avatar{width:44px;height:44px;border-radius:50%;background:#1F2630;display:grid;place-items:center;font-weight:600}
+.btn{font:inherit;font-weight:600;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid #2A3341;background:#151A21;color:#E7EAEE;cursor:pointer}
+.btn:hover{background:#1B222C}
+.btn.pri{background:var(--a);border-color:var(--a);color:#06231A}
+.btn.pri:hover{filter:brightness(1.08)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.card{background:#151A21;border:1px solid #232A34;border-radius:12px;padding:20px}
+.stat .k{color:#9AA5B4;font-size:13px}.stat .v{font-size:30px;font-weight:700;margin-top:4px}.stat .s{font-size:12px;color:#8B95A3}
+.bar{height:6px;border-radius:3px;background:#232A34;margin-top:10px;overflow:hidden}.bar span{display:block;height:100%;background:var(--a)}
+.two{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px}
+h2{margin:0 0 14px;font-size:16px;font-weight:600}
+.form{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}.form .wide{grid-column:1/-1}
+.seg{display:flex;gap:6px}.seg .btn{flex:1}.seg .btn.on{background:#18202A;border-color:var(--a);color:#fff}
+.job{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #232A34;flex-wrap:wrap}
+.job:first-of-type{border-top:0}.job .t{flex:1;min-width:160px}.job .t b{display:block;font-weight:600}.job .t span{font-size:12px;color:#8B95A3}
+.chip{display:inline-block;font-size:12px;font-weight:600;border-radius:6px;padding:3px 10px;border:1px solid}
+.chip.ok{color:#7FE3B4;border-color:#1F5A41;background:#0F261C}.chip.run{color:#8CC4FF;border-color:#24507E;background:#0E2133}
+.chip.bad{color:#FF9B9B;border-color:#6A2A2A;background:#2B1212}.chip.warn{color:#F2C14E;border-color:#4A3F1E;background:#221C0C}
+.head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.head h2{margin:0;flex:1}
+.filters{display:flex;gap:6px}.filters .btn{min-height:36px;padding:0 12px;font-weight:500}.filters .on{background:#18202A;border-color:var(--a)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:14px}
+.clip{background:#151A21;border:1px solid #232A34;border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{position:relative;aspect-ratio:9/12;background:#0B0E12;display:flex;flex-direction:column}
+.thumb .face{flex:0 0 36%;background:#222B38;display:grid;place-items:center;color:#9AA5B4;font-size:12px}
+.thumb .game{flex:1;background:#171E28;display:grid;place-items:center;color:#7C8797;font-size:12px}
+.thumb .cap{position:absolute;left:12px;right:12px;bottom:18px;text-align:center;font-weight:700;font-size:17px;color:#fff;text-shadow:0 2px 6px #000}
+.rank,.dur{position:absolute;top:10px;font-size:12px;font-weight:700;background:#000B;border-radius:6px;padding:2px 8px}.rank{left:10px}.dur{right:10px}
+.meta{padding:14px;display:flex;flex-direction:column;gap:8px}.meta h3{margin:0;font-size:15px;font-weight:600;line-height:1.35}
+.srow{display:flex;align-items:center;gap:8px;font-size:12px}.muted{color:#8B95A3}.state{margin-left:auto;color:#C4CCD8}
+.score{font-weight:700;border-radius:6px;padding:1px 8px;color:#06140D}.s-hi{background:#5BE3A8}.s-mid{background:#F2C14E}.s-low{background:#B3BCC8}
+.tags{margin:0;font-size:12px;color:#8CC4FF}
+.acts{display:flex;gap:6px;margin-top:4px}.acts .btn{flex:1;padding:0 8px;font-size:13px}
+table{width:100%;border-collapse:collapse}th{text-align:left;font-size:12px;color:#9AA5B4;font-weight:500;padding:8px 0}td{padding:12px 0;border-top:1px solid #232A34}
+.scroll{overflow-x:auto}
+@media (max-width:1000px){.app{grid-template-columns:1fr}.side{flex-direction:row;flex-wrap:wrap;align-items:center;border-right:0;border-bottom:1px solid #1F2630}.nav{flex-direction:row;flex-wrap:wrap}.side .foot{display:none}.two{grid-template-columns:1fr}.form{grid-template-columns:1fr}.search{width:100%}.main{padding:20px 16px 40px}}
+</style>
+
+</head>
+<body>
+
+<div class="app" style="--a: #3DDC97">
+<aside class="side">
+<div class="brand">gta<b>-</b>clipper</div>
+<nav class="nav" aria-label="Main">
+<a class="on" href="#">Dashboard</a><a href="#">Clips <i>24</i></a><a href="#">Jobs <i>2</i></a><a href="#">Schedule <i>9</i></a><a href="#">Channels</a><a href="#">Settings</a>
+</nav>
+<div class="foot">Engine: GitHub Actions<br>Backend: Supabase</div>
+</aside>
+<main class="main">
+<div class="top">
+<h1>Dashboard</h1><span class="badge">Sample data</span>
+<div class="search"><label for="q" style="position:absolute;left:-9999px">Search clips</label><input id="q" type="search" placeholder="Search clips and jobs"></div>
+<button class="btn pri" type="button">New job</button>
+<div class="avatar" aria-label="Account">A</div>
+</div>
+<section class="stats" aria-label="Overview">
+<div class="card stat"><div class="k">Clips ready</div><div class="v">24</div><div class="s">6 waiting for approval</div></div>
+<div class="card stat"><div class="k">Scheduled uploads</div><div class="v">9</div><div class="s">Next: today 7:00 PM ET</div></div>
+<div class="card stat"><div class="k">Jobs running</div><div class="v">2</div><div class="s">1 failed in the last 24 h</div></div>
+<div class="card stat"><div class="k">Gemini quota used today</div><div class="v">38%</div><div class="bar"><span style="width:38%"></span></div></div>
+</section>
+<section class="two">
+<div class="card">
+<h2>New clipping job</h2>
+<div class="form">
+<div class="wide"><label for="u">YouTube link</label><input id="u" type="url" placeholder="https://www.youtube.com/watch?v=..."></div>
+<div><label for="st">Start from</label><input id="st" value="00:00:00"></div>
+<div><label for="ln">Clip length</label><select id="ln"><option>30-40 seconds</option><option>40-60 seconds</option><option>Custom</option></select></div>
+<div><label for="n">Number of clips</label><input id="n" type="number" value="6" min="1" max="10"></div>
+<div class="wide"><label>Mode</label><div class="seg"><button class="btn on" type="button">Auto: AI picks the top moments</button><button class="btn" type="button">Manual time range</button></div></div>
+<div class="wide"><button class="btn pri" type="button" style="width:100%">Start clipping</button></div>
+</div>
+</div>
+<div class="card">
+<h2>Job queue</h2>
+<div class="job"><div class="t"><b>Stream marathon, part 3</b><span>20261121-1042-a3f9 · 6 clips</span></div><span class="chip run">Running 62%</span></div>
+<div class="job"><div class="t"><b>Launch day highlights</b><span>20261121-0915-k2m8 · 6 clips</span></div><span class="chip ok">Done</span></div>
+<div class="job"><div class="t"><b>Overnight stream</b><span>20261120-2210-x7q1 · 0 clips</span></div><span class="chip bad">Blocked by YouTube</span></div>
+</div>
+</section>
+<section>
+<div class="head"><h2>Clips from the latest job</h2>
+<div class="filters"><button class="btn on" type="button">All</button><button class="btn" type="button">Approved</button><button class="btn" type="button">Pending</button></div>
+<button class="btn pri" type="button">Schedule selected (2)</button></div>
+<div class="grid">
+<article class="clip"><div class="thumb"><div class="face">Facecam</div><div class="game">Gameplay</div><div class="cap">No way that worked</div><span class="rank">#1</span><span class="dur">0:34</span></div><div class="meta"><div class="srow"><span class="score s-hi">9.4</span><span class="muted">Virality score</span><span class="state">Approved</span></div><h3>He did NOT expect that landing</h3><p class="tags">#gta6 #insane #shorts</p><div class="acts"><button class="btn pri" type="button">Approve</button><button class="btn" type="button">Schedule</button><button class="btn" type="button" aria-label="Download clip 1">Download</button></div></div></article>
+<article class="clip"><div class="thumb"><div class="face">Facecam</div><div class="game">Gameplay</div><div class="cap">Oh no no no</div><span class="rank">#2</span><span class="dur">0:38</span></div><div class="meta"><div class="srow"><span class="score s-hi">9.1</span><span class="muted">Virality score</span><span class="state">Pending</span></div><h3>Police chase goes completely wrong</h3><p class="tags">#gta6 #chase #funny</p><div class="acts"><button class="btn pri" type="button">Approve</button><button class="btn" type="button">Schedule</button><button class="btn" type="button" aria-label="Download clip 2">Download</button></div></div></article>
+<article class="clip"><div class="thumb"><div class="face">Facecam</div><div class="game">Gameplay</div><div class="cap">Chat is going crazy</div><span class="rank">#3</span><span class="dur">0:31</span></div><div class="meta"><div class="srow"><span class="score s-hi">8.7</span><span class="muted">Virality score</span><span class="state">Approved</span></div><h3>The stream chat lost it here</h3><p class="tags">#gta6 #clutch #gaming</p><div class="acts"><button class="btn pri" type="button">Approve</button><button class="btn" type="button">Schedule</button><button class="btn" type="button" aria-label="Download clip 3">Download</button></div></div></article>
+<article class="clip"><div class="thumb"><div class="face">Facecam</div><div class="game">Gameplay</div><div class="cap">We are so cooked</div><span class="rank">#4</span><span class="dur">0:40</span></div><div class="meta"><div class="srow"><span class="score s-mid">8.2</span><span class="muted">Virality score</span><span class="state">Pending</span></div><h3>Best heist moment so far</h3><p class="tags">#gta6 #heist #viral</p><div class="acts"><button class="btn pri" type="button">Approve</button><button class="btn" type="button">Schedule</button><button class="btn" type="button" aria-label="Download clip 4">Download</button></div></div></article>
+<article class="clip"><div class="thumb"><div class="face">Facecam</div><div class="game">Gameplay</div><div class="cap">Wait what is that</div><span class="rank">#5</span><span class="dur">0:36</span></div><div class="meta"><div class="srow"><span class="score s-mid">7.6</span><span class="muted">Virality score</span><span class="state">Pending</span></div><h3>Nobody saw this coming</h3><p class="tags">#gta6 #plot #shorts</p><div class="acts"><button class="btn pri" type="button">Approve</button><button class="btn" type="button">Schedule</button><button class="btn" type="button" aria-label="Download clip 5">Download</button></div></div></article>
+<article class="clip"><div class="thumb"><div class="face">Facecam</div><div class="game">Gameplay</div><div class="cap">That was so close</div><span class="rank">#6</span><span class="dur">0:33</span></div><div class="meta"><div class="srow"><span class="score s-low">6.9</span><span class="muted">Virality score</span><span class="state">Pending</span></div><h3>Funniest crash of the night</h3><p class="tags">#gta6 #crash #lol</p><div class="acts"><button class="btn pri" type="button">Approve</button><button class="btn" type="button">Schedule</button><button class="btn" type="button" aria-label="Download clip 6">Download</button></div></div></article>
+</div>
+</section>
+<section class="card">
+<div class="head"><h2>Upload queue</h2><div style="width:220px"><label for="ch" style="position:absolute;left:-9999px">Channel</label><select id="ch"><option>Main channel</option><option>Second channel</option></select></div><button class="btn" type="button">Bulk schedule</button></div>
+<div class="scroll"><table><thead><tr><th>Publish time</th><th>Clip</th><th>Channel</th><th>Status</th></tr></thead><tbody><tr><td>7:00 PM ET</td><td>He did NOT expect that landing</td><td>Main channel</td><td><span class="chip ok">Scheduled</span></td></tr><tr><td>9:00 PM ET</td><td>The stream chat lost it here</td><td>Main channel</td><td><span class="chip ok">Scheduled</span></td></tr><tr><td>Tomorrow 7:00 PM ET</td><td>Police chase goes completely wrong</td><td>Second channel</td><td><span class="chip warn">Needs approval</span></td></tr></tbody></table></div>
+</section>
+</main>
+</div>
+
+</body>
+</html>
