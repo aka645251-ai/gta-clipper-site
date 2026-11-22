@@ -199,7 +199,7 @@ dialog .ft{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
 <script>
 (function(){
 var $=function(s){return document.querySelector(s)};
-function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","'":&quot;","'":"&#39;"}[c]})}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 var DEMO=[
 {t:"He did NOT expect that landing",h:"No way that worked",d:34,s:94,g:"#gta6 #insane #shorts",tr:"Okay okay okay, watch this. No way. There is no way that landed. Chat, did you see that?",b:[96,92,90,98]},
 {t:"Police chase goes completely wrong",h:"POV: the chase ends badly",d:38,s:91,g:"#gta6 #chase #funny",tr:"They are right behind me, I am turning here, oh no no no, that was the wrong street.",b:[93,88,89,94]},
