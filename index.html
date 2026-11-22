@@ -3,127 +3,180 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>gta-clipper dashboard</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="color-scheme" content="dark">
+<title>gta-clipper</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-body{margin:0}
-.app{display:grid;grid-template-columns:232px minmax(0,1fr);background:#0E1116;color:#E7EAEE;font:14px/1.5 Inter,system-ui,sans-serif}
-.side{background:#0B0E12;border-right:1px solid #1F2630;padding:24px 16px;display:flex;flex-direction:column;gap:28px}
-.brand{font-weight:700;font-size:17px;letter-spacing:.2px;padding:0 8px}.brand b{color:var(--a)}
-.nav{display:flex;flex-direction:column;gap:4px}
-.nav a{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:8px;color:#A9B3C1;text-decoration:none;min-height:24px}
-.nav a:hover{background:#151A21;color:#E7EAEE}
-.nav a.on{background:#18202A;color:#fff;font-weight:600}
-.nav i{font-style:normal;font-size:12px;background:#1F2630;color:#C4CCD8;border-radius:10px;padding:1px 8px}
-.side .foot{margin-top:auto;font-size:12px;color:#8B95A3;padding:0 8px}
-.main{padding:28px 36px 48px;display:flex;flex-direction:column;gap:24px;min-width:0}
-.top{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.top h1{margin:0;font-size:24px;font-weight:700;flex:1;min-width:180px}
-.badge{font-size:12px;color:#F2C14E;border:1px solid #4A3F1E;background:#221C0C;border-radius:6px;padding:3px 10px}
-input,select{background:#0E1116;border:1px solid #2A3341;color:#E7EAEE;border-radius:8px;padding:10px 12px;font:inherit;min-height:44px;box-sizing:border-box;width:100%}
-input:focus,select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--a);outline-offset:2px}
-label{display:block;font-size:12px;color:#9AA5B4;margin-bottom:6px;font-weight:500}
-.search{width:260px}
-.avatar{width:44px;height:44px;border-radius:50%;background:#1F2630;display:grid;place-items:center;font-weight:600}
-.btn{font:inherit;font-weight:600;min-height:44px;padding:0 16px;border-radius:8px;border:1px solid #2A3341;background:#151A21;color:#E7EAEE;cursor:pointer}
-.btn:hover{background:#1B222C}
-.btn.pri{background:var(--a);border-color:var(--a);color:#06231A}
-.btn.pri:hover{filter:brightness(1.08)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
-.card{background:#151A21;border:1px solid #232A34;border-radius:12px;padding:20px}
-.stat .k{color:#9AA5B4;font-size:13px}.stat .v{font-size:30px;font-weight:700;margin-top:4px}.stat .s{font-size:12px;color:#8B95A3}
-.bar{height:6px;border-radius:3px;background:#232A34;margin-top:10px;overflow:hidden}.bar span{display:block;height:100%;background:var(--a)}
-.two{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px}
-h2{margin:0 0 14px;font-size:16px;font-weight:600}
-.form{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}.form .wide{grid-column:1/-1}
-.seg{display:flex;gap:6px}.seg .btn{flex:1}.seg .btn.on{background:#18202A;border-color:var(--a);color:#fff}
-.job{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid #232A34;flex-wrap:wrap}
-.job:first-of-type{border-top:0}.job .t{flex:1;min-width:160px}.job .t b{display:block;font-weight:600}.job .t span{font-size:12px;color:#8B95A3}
-.chip{display:inline-block;font-size:12px;font-weight:600;border-radius:6px;padding:3px 10px;border:1px solid}
-.chip.ok{color:#7FE3B4;border-color:#1F5A41;background:#0F261C}.chip.run{color:#8CC4FF;border-color:#24507E;background:#0E2133}
-.chip.bad{color:#FF9B9B;border-color:#6A2A2A;background:#2B1212}.chip.warn{color:#F2C14E;border-color:#4A3F1E;background:#221C0C}
-.head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.head h2{margin:0;flex:1}
-.filters{display:flex;gap:6px}.filters .btn{min-height:36px;padding:0 12px;font-weight:500}.filters .on{background:#18202A;border-color:var(--a)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:14px}
-.clip{background:#151A21;border:1px solid #232A34;border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
-.thumb{position:relative;aspect-ratio:9/12;background:#0B0E12;display:flex;flex-direction:column}
-.thumb .face{flex:0 0 36%;background:#222B38;display:grid;place-items:center;color:#9AA5B4;font-size:12px}
-.thumb .game{flex:1;background:#171E28;display:grid;place-items:center;color:#7C8797;font-size:12px}
-.thumb .cap{position:absolute;left:12px;right:12px;bottom:18px;text-align:center;font-weight:700;font-size:17px;color:#fff;text-shadow:0 2px 6px #000}
-.rank,.dur{position:absolute;top:10px;font-size:12px;font-weight:700;background:#000B;border-radius:6px;padding:2px 8px}.rank{left:10px}.dur{right:10px}
-.meta{padding:14px;display:flex;flex-direction:column;gap:8px}.meta h3{margin:0;font-size:15px;font-weight:600;line-height:1.35}
-.srow{display:flex;align-items:center;gap:8px;font-size:12px}.muted{color:#8B95A3}.state{margin-left:auto;color:#C4CCD8}
-.score{font-weight:700;border-radius:6px;padding:1px 8px;color:#06140D}.s-hi{background:#5BE3A8}.s-mid{background:#F2C14E}.s-low{background:#B3BCC8}
-.tags{margin:0;font-size:12px;color:#8CC4FF}
-.acts{display:flex;gap:6px;margin-top:4px}.acts .btn{flex:1;padding:0 8px;font-size:13px}
-table{width:100%;border-collapse:collapse}th{text-align:left;font-size:12px;color:#9AA5B4;font-weight:500;padding:8px 0}td{padding:12px 0;border-top:1px solid #232A34}
-.scroll{overflow-x:auto}
-@media (max-width:1000px){.app{grid-template-columns:1fr}.side{flex-direction:row;flex-wrap:wrap;align-items:center;border-right:0;border-bottom:1px solid #1F2630}.nav{flex-direction:row;flex-wrap:wrap}.side .foot{display:none}.two{grid-template-columns:1fr}.form{grid-template-columns:1fr}.search{width:100%}.main{padding:20px 16px 40px}}
+:root{--bg:#0B0D10;--s:#12151A;--s2:#181C22;--ln:#222831;--tx:#ECEFF3;--mu:#98A2B0;--a:#4BE3A0;--ink:#04150D;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+header{display:flex;align-items:center;gap:16px;padding:18px 32px;border-bottom:1px solid var(--ln)}
+.logo{font-weight:700;font-size:17px;letter-spacing:-.2px;flex:1}.logo b{color:var(--a)}
+.av{width:36px;height:36px;border-radius:50%;background:var(--s2);border:1px solid var(--ln);display:grid;place-items:center;font-weight:600;font-size:13px}
+main{max-width:1040px;margin:0 auto;padding:0 24px}
+button,input,select{font:inherit;color:inherit}
+input,select{background:var(--s);border:1px solid var(--ln);border-radius:12px;padding:0 16px;min-height:52px;width:100%}
+input::placeholder{color:#6F7A89}
+:focus-visible{outline:2px solid var(--a);outline-offset:2px}
+.btn{min-height:52px;padding:0 24px;border-radius:12px;border:1px solid var(--ln);background:var(--s2);font-weight:600;cursor:pointer}
+.btn:hover{background:#1F242C}
+.btn.pri{background:var(--a);border-color:var(--a);color:var(--ink)}.btn.pri:hover{filter:brightness(1.07)}
+.btn.sm{min-height:40px;padding:0 14px;font-size:14px}
+label{display:block;font-size:12px;font-weight:500;color:var(--mu);margin-bottom:6px}
+/* start */
+.hero{padding:96px 0 40px;text-align:center}
+.hero h1{margin:0 auto;max-width:760px;font-size:clamp(34px,6vw,60px);line-height:1.05;letter-spacing:-1.6px;font-weight:800}
+.hero p{margin:18px auto 0;max-width:520px;color:var(--mu);font-size:17px}
+.box{max-width:760px;margin:40px auto 0;display:flex;gap:10px}
+.box input{flex:1;min-height:60px;font-size:16px}.box .btn{min-height:60px;white-space:nowrap}
+.err{color:#FF9B9B;font-size:14px;min-height:22px;margin:10px auto 0;max-width:760px;text-align:left}
+details{max-width:760px;margin:6px auto 0;text-align:left}
+summary{cursor:pointer;color:var(--mu);font-size:14px;padding:10px 0;width:max-content}
+.opts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:8px 0 4px}
+.note{color:#7A8594;font-size:13px;text-align:center;margin-top:28px}
+/* run */
+.run{max-width:640px;margin:96px auto 0}
+.run h2{margin:0 0 6px;font-size:26px;letter-spacing:-.5px}
+.src{color:var(--mu);font-size:14px;word-break:break-all}
+.bar{height:6px;background:var(--ln);border-radius:3px;margin:26px 0 22px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--a);transition:width .6s}
+.st{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.st li{display:flex;align-items:center;gap:12px;padding:10px 0;color:#6F7A89}
+.st li::before{content:"";width:18px;height:18px;border-radius:50%;border:2px solid #333B46;flex:none}
+.st li.act{color:var(--tx);font-weight:600}.st li.act::before{border-color:var(--a);border-top-color:transparent;animation:sp 1s linear infinite}
+.st li.ok{color:var(--mu)}.st li.ok::before{background:var(--a);border-color:var(--a)}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.st li.act::before{animation:none}.bar i{transition:none}}
+/* results */
+.rh{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;padding:48px 0 22px}
+.rh h2{margin:0;font-size:32px;letter-spacing:-.8px;line-height:1.1}.rh p{margin:6px 0 0;color:var(--mu);font-size:14px;word-break:break-all}
+.rh>div{flex:1;min-width:240px}
+.tag{display:inline-block;font-size:11px;font-weight:600;color:#F2C14E;border:1px solid #4A3F1E;border-radius:6px;padding:1px 8px;margin-left:8px;vertical-align:middle}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(224px,1fr));gap:18px;padding-bottom:150px}
+.clip{background:var(--s);border:1px solid var(--ln);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.clip.sel{border-color:var(--a);box-shadow:0 0 0 1px var(--a)}
+.th{position:relative;aspect-ratio:9/13;background:#0A0C0F;display:flex;flex-direction:column}
+.th .f{flex:0 0 34%;background:#1D242E;display:grid;place-items:center;font-size:12px;color:#8A95A4}
+.th .g{flex:1;background:#141920;display:grid;place-items:center;font-size:12px;color:#707B8A}
+.th .c{position:absolute;left:12px;right:12px;bottom:16px;text-align:center;font-weight:800;font-size:18px;text-shadow:0 2px 8px #000}
+.pill{position:absolute;top:10px;background:#000C;border-radius:8px;padding:2px 9px;font-size:12px;font-weight:700}
+.pill.r{left:10px}.pill.d{right:10px}
+.ck{position:absolute;left:10px;bottom:70px;width:26px;height:26px;accent-color:var(--a);min-height:0;padding:0}
+.mt{padding:14px;display:grid;gap:8px}
+.mt h3{margin:0;font-size:15px;line-height:1.35}
+.sc{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--mu)}
+.sc b{background:var(--a);color:var(--ink);border-radius:6px;padding:1px 8px}.sc b.m{background:#F2C14E}.sc b.l{background:#B7C0CC}
+.hs{color:#8CC4FF;font-size:12px;margin:0}
+.bt{display:flex;gap:8px}.bt .btn{flex:1;min-height:40px;padding:0 10px;font-size:14px}
+.dock{position:fixed;left:0;right:0;bottom:0;background:#0E1116F2;border-top:1px solid var(--ln);padding:14px 24px}
+.dk{max-width:1040px;margin:0 auto;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+.dk>div{min-width:150px;flex:1}.dk .n{flex:0 0 auto;font-weight:600;padding-bottom:14px}
+.msg{max-width:1040px;margin:10px auto 0;font-size:14px;color:var(--a);min-height:20px}
+@media (max-width:720px){header{padding:14px 18px}.hero{padding-top:56px}.box{flex-direction:column}.opts{grid-template-columns:1fr 1fr}.dock{padding:12px 16px}}
 </style>
-
 </head>
 <body>
+<header><div class="logo">gta<b>-</b>clipper</div><div class="av" aria-label="Account">A</div></header>
+<main>
 
-<div class="app" style="--a: #3DDC97">
-<aside class="side">
-<div class="brand">gta<b>-</b>clipper</div>
-<nav class="nav" aria-label="Main">
-<a class="on" href="#">Dashboard</a><a href="#">Clips <i>24</i></a><a href="#">Jobs <i>2</i></a><a href="#">Schedule <i>9</i></a><a href="#">Channels</a><a href="#">Settings</a>
-</nav>
-<div class="foot">Engine: GitHub Actions<br>Backend: Supabase</div>
-</aside>
-<main class="main">
-<div class="top">
-<h1>Dashboard</h1><span class="badge">Sample data</span>
-<div class="search"><label for="q" style="position:absolute;left:-9999px">Search clips</label><input id="q" type="search" placeholder="Search clips and jobs"></div>
-<button class="btn pri" type="button">New job</button>
-<div class="avatar" aria-label="Account">A</div>
-</div>
-<section class="stats" aria-label="Overview">
-<div class="card stat"><div class="k">Clips ready</div><div class="v">24</div><div class="s">6 waiting for approval</div></div>
-<div class="card stat"><div class="k">Scheduled uploads</div><div class="v">9</div><div class="s">Next: today 7:00 PM ET</div></div>
-<div class="card stat"><div class="k">Jobs running</div><div class="v">2</div><div class="s">1 failed in the last 24 h</div></div>
-<div class="card stat"><div class="k">Gemini quota used today</div><div class="v">38%</div><div class="bar"><span style="width:38%"></span></div></div>
-</section>
-<section class="two">
-<div class="card">
-<h2>New clipping job</h2>
-<div class="form">
-<div class="wide"><label for="u">YouTube link</label><input id="u" type="url" placeholder="https://www.youtube.com/watch?v=..."></div>
-<div><label for="st">Start from</label><input id="st" value="00:00:00"></div>
-<div><label for="ln">Clip length</label><select id="ln"><option>30-40 seconds</option><option>40-60 seconds</option><option>Custom</option></select></div>
-<div><label for="n">Number of clips</label><input id="n" type="number" value="6" min="1" max="10"></div>
-<div class="wide"><label>Mode</label><div class="seg"><button class="btn on" type="button">Auto: AI picks the top moments</button><button class="btn" type="button">Manual time range</button></div></div>
-<div class="wide"><button class="btn pri" type="button" style="width:100%">Start clipping</button></div>
-</div>
-</div>
-<div class="card">
-<h2>Job queue</h2>
-<div class="job"><div class="t"><b>Stream marathon, part 3</b><span>20261121-1042-a3f9 · 6 clips</span></div><span class="chip run">Running 62%</span></div>
-<div class="job"><div class="t"><b>Launch day highlights</b><span>20261121-0915-k2m8 · 6 clips</span></div><span class="chip ok">Done</span></div>
-<div class="job"><div class="t"><b>Overnight stream</b><span>20261120-2210-x7q1 · 0 clips</span></div><span class="chip bad">Blocked by YouTube</span></div>
+<section id="v-start" class="view">
+<div class="hero">
+<h1>Turn any stream into ready-to-post clips.</h1>
+<p>Paste a YouTube link. The best moments are found, cut, captioned and ready to schedule.</p>
+<form class="box" id="f" novalidate>
+<label for="url" style="position:absolute;left:-9999px">YouTube link</label>
+<input id="url" type="url" inputmode="url" autocomplete="off" placeholder="https://www.youtube.com/watch?v=...">
+<button class="btn pri" type="submit">Start clipping</button>
+</form>
+<div class="err" id="err" role="alert"></div>
+<details><summary>Options</summary>
+<div class="opts">
+<div><label for="o1">Start from</label><input id="o1" value="00:00:00"></div>
+<div><label for="o2">Clip length</label><select id="o2"><option>30-40 seconds</option><option>40-60 seconds</option></select></div>
+<div><label for="o3">Clips</label><input id="o3" type="number" min="1" max="10" value="6"></div>
+<div><label for="o4">Mode</label><select id="o4"><option>Auto: top moments</option><option>Manual time range</option></select></div>
+</div></details>
+<p class="note">Works with ended, public streams. Long streams are processed one section at a time.</p>
 </div>
 </section>
-<section>
-<div class="head"><h2>Clips from the latest job</h2>
-<div class="filters"><button class="btn on" type="button">All</button><button class="btn" type="button">Approved</button><button class="btn" type="button">Pending</button></div>
-<button class="btn pri" type="button">Schedule selected (2)</button></div>
-<div class="grid">
-<article class="clip"><div class="thumb"><div class="face">Facecam</div><div class="game">Gameplay</div><div class="cap">No way that worked</div><span class="rank">#1</span><span class="dur">0:34</span></div><div class="meta"><div class="srow"><span class="score s-hi">9.4</span><span class="muted">Virality score</span><span class="state">Approved</span></div><h3>He did NOT expect that landing</h3><p class="tags">#gta6 #insane #shorts</p><div class="acts"><button class="btn pri" type="button">Approve</button><button class="btn" type="button">Schedule</button><button class="btn" type="button" aria-label="Download clip 1">Download</button></div></div></article>
-<article class="clip"><div class="thumb"><div class="face">Facecam</div><div class="game">Gameplay</div><div class="cap">Oh no no no</div><span class="rank">#2</span><span class="dur">0:38</span></div><div class="meta"><div class="srow"><span class="score s-hi">9.1</span><span class="muted">Virality score</span><span class="state">Pending</span></div><h3>Police chase goes completely wrong</h3><p class="tags">#gta6 #chase #funny</p><div class="acts"><button class="btn pri" type="button">Approve</button><button class="btn" type="button">Schedule</button><button class="btn" type="button" aria-label="Download clip 2">Download</button></div></div></article>
-<article class="clip"><div class="thumb"><div class="face">Facecam</div><div class="game">Gameplay</div><div class="cap">Chat is going crazy</div><span class="rank">#3</span><span class="dur">0:31</span></div><div class="meta"><div class="srow"><span class="score s-hi">8.7</span><span class="muted">Virality score</span><span class="state">Approved</span></div><h3>The stream chat lost it here</h3><p class="tags">#gta6 #clutch #gaming</p><div class="acts"><button class="btn pri" type="button">Approve</button><button class="btn" type="button">Schedule</button><button class="btn" type="button" aria-label="Download clip 3">Download</button></div></div></article>
-<article class="clip"><div class="thumb"><div class="face">Facecam</div><div class="game">Gameplay</div><div class="cap">We are so cooked</div><span class="rank">#4</span><span class="dur">0:40</span></div><div class="meta"><div class="srow"><span class="score s-mid">8.2</span><span class="muted">Virality score</span><span class="state">Pending</span></div><h3>Best heist moment so far</h3><p class="tags">#gta6 #heist #viral</p><div class="acts"><button class="btn pri" type="button">Approve</button><button class="btn" type="button">Schedule</button><button class="btn" type="button" aria-label="Download clip 4">Download</button></div></div></article>
-<article class="clip"><div class="thumb"><div class="face">Facecam</div><div class="game">Gameplay</div><div class="cap">Wait what is that</div><span class="rank">#5</span><span class="dur">0:36</span></div><div class="meta"><div class="srow"><span class="score s-mid">7.6</span><span class="muted">Virality score</span><span class="state">Pending</span></div><h3>Nobody saw this coming</h3><p class="tags">#gta6 #plot #shorts</p><div class="acts"><button class="btn pri" type="button">Approve</button><button class="btn" type="button">Schedule</button><button class="btn" type="button" aria-label="Download clip 5">Download</button></div></div></article>
-<article class="clip"><div class="thumb"><div class="face">Facecam</div><div class="game">Gameplay</div><div class="cap">That was so close</div><span class="rank">#6</span><span class="dur">0:33</span></div><div class="meta"><div class="srow"><span class="score s-low">6.9</span><span class="muted">Virality score</span><span class="state">Pending</span></div><h3>Funniest crash of the night</h3><p class="tags">#gta6 #crash #lol</p><div class="acts"><button class="btn pri" type="button">Approve</button><button class="btn" type="button">Schedule</button><button class="btn" type="button" aria-label="Download clip 6">Download</button></div></div></article>
+
+<section id="v-run" class="view" hidden>
+<div class="run">
+<h2>Working on your clips</h2>
+<div class="src" id="src"></div>
+<div class="bar" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="pb"></i></div>
+<ul class="st" id="steps" aria-live="polite"></ul>
 </div>
 </section>
-<section class="card">
-<div class="head"><h2>Upload queue</h2><div style="width:220px"><label for="ch" style="position:absolute;left:-9999px">Channel</label><select id="ch"><option>Main channel</option><option>Second channel</option></select></div><button class="btn" type="button">Bulk schedule</button></div>
-<div class="scroll"><table><thead><tr><th>Publish time</th><th>Clip</th><th>Channel</th><th>Status</th></tr></thead><tbody><tr><td>7:00 PM ET</td><td>He did NOT expect that landing</td><td>Main channel</td><td><span class="chip ok">Scheduled</span></td></tr><tr><td>9:00 PM ET</td><td>The stream chat lost it here</td><td>Main channel</td><td><span class="chip ok">Scheduled</span></td></tr><tr><td>Tomorrow 7:00 PM ET</td><td>Police chase goes completely wrong</td><td>Second channel</td><td><span class="chip warn">Needs approval</span></td></tr></tbody></table></div>
+
+<section id="v-res" class="view" hidden>
+<div class="rh">
+<div><h2 id="rt">6 clips ready</h2><p id="rs"></p></div>
+<button class="btn sm" id="all" type="button">Select all</button>
+<button class="btn sm" id="again" type="button">New link</button>
+</div>
+<div class="grid" id="grid"></div>
+<div class="dock" id="dock" hidden>
+<div class="dk">
+<div class="n" id="cnt"></div>
+<div><label for="ch">Channel</label><select id="ch"><option>Main channel</option><option>Second channel</option></select></div>
+<div><label for="t0">First publish</label><input id="t0" type="datetime-local"></div>
+<div><label for="gap">Gap between clips</label><select id="gap"><option value="1">1 hour</option><option value="2" selected>2 hours</option><option value="4">4 hours</option><option value="24">1 day</option></select></div>
+<button class="btn pri" id="sch" type="button">Schedule uploads</button>
+</div>
+<div class="msg" id="msg" role="status"></div>
+</div>
 </section>
+
 </main>
-</div>
-
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var DEMO=[
+["He did NOT expect that landing","No way that worked","0:34",9.4,"#gta6 #insane #shorts"],
+["Police chase goes completely wrong","Oh no no no","0:38",9.1,"#gta6 #chase #funny"],
+["The stream chat lost it here","Chat is going crazy","0:31",8.7,"#gta6 #clutch #gaming"],
+["Best heist moment so far","We are so cooked","0:40",8.2,"#gta6 #heist #viral"],
+["Nobody saw this coming","Wait what is that","0:36",7.6,"#gta6 #plot #shorts"],
+["Funniest crash of the night","That was so close","0:33",6.9,"#gta6 #crash #lol"]];
+var STEPS=["Reading captions","Finding the top moments","Cutting the clips","Adding captions and layout","Ready"];
+var sel={},timer=null;
+function view(id){var v=document.querySelectorAll(".view");for(var i=0;i<v.length;i++)v[i].hidden=v[i].id!==id;window.scrollTo(0,0)}
+function okUrl(u){try{var h=new URL(u).hostname;return["youtube.com","www.youtube.com","m.youtube.com","youtu.be"].indexOf(h)>-1}catch(e){return false}}
+$("#f").addEventListener("submit",function(e){
+e.preventDefault();var u=$("#url").value.trim();
+if(!okUrl(u)){$("#err").textContent="Paste a full YouTube link, like https://www.youtube.com/watch?v=...";$("#url").focus();return}
+$("#err").textContent="";$("#src").textContent=u;$("#rs").textContent=u;run()});
+function run(){
+view("v-run");var i=0;
+function paint(){
+var h="";for(var k=0;k<STEPS.length;k++){h+='<li class="'+(k<i?"ok":k===i?"act":"")+'">'+STEPS[k]+'</li>'}
+$("#steps").innerHTML=h;
+var p=Math.round(i/(STEPS.length-1)*100);$("#pb").style.width=p+"%";$(".bar").setAttribute("aria-valuenow",p)}
+paint();clearInterval(timer);
+timer=setInterval(function(){i++;paint();if(i>=STEPS.length-1){clearInterval(timer);setTimeout(results,600)}},1500)}
+function results(){
+sel={};var h="";
+for(var n=0;n<DEMO.length;n++){var d=DEMO[n],c=d[3]>=8.5?"":d[3]>=7?"m":"l";
+h+='<article class="clip" id="c'+n+'"><div class="th"><div class="f">Facecam</div><div class="g">Gameplay</div><div class="c">'+d[1]+'</div><span class="pill r">#'+(n+1)+'</span><span class="pill d">'+d[2]+'</span><input class="ck" type="checkbox" data-i="'+n+'" aria-label="Select clip '+(n+1)+'"></div><div class="mt"><div class="sc"><b class="'+c+'">'+d[3].toFixed(1)+'</b>Virality score</div><h3>'+d[0]+'</h3><p class="hs">'+d[4]+'</p><div class="bt"><button class="btn" type="button">Edit</button><button class="btn" type="button" aria-label="Download clip '+(n+1)+'">Download</button></div></div></article>'}
+$("#grid").innerHTML=h;$("#rt").innerHTML=DEMO.length+' clips ready<span class="tag">Demo data</span>';
+dock();view("v-res")}
+function dock(){
+var ids=Object.keys(sel).filter(function(k){return sel[k]}),n=ids.length;
+$("#dock").hidden=n===0;$("#cnt").textContent=n+" selected";
+for(var i=0;i<DEMO.length;i++){var el=$("#c"+i);if(el)el.classList.toggle("sel",!!sel[i])}
+$("#msg").textContent=""}
+$("#grid").addEventListener("change",function(e){var t=e.target;if(t.classList.contains("ck")){sel[t.getAttribute("data-i")]=t.checked;dock()}});
+$("#all").addEventListener("click",function(){var boxes=document.querySelectorAll(".ck"),all=Object.keys(sel).filter(function(k){return sel[k]}).length===boxes.length;
+for(var i=0;i<boxes.length;i++){boxes[i].checked=!all;sel[i]=!all}dock()});
+$("#again").addEventListener("click",function(){clearInterval(timer);$("#url").value="";view("v-start")});
+$("#sch").addEventListener("click",function(){
+var ids=Object.keys(sel).filter(function(k){return sel[k]}).map(Number).sort(),v=$("#t0").value;
+if(!v){$("#msg").textContent="Pick the first publish time.";$("#t0").focus();return}
+var t=new Date(v).getTime(),g=Number($("#gap").value)*3600000,f=new Intl.DateTimeFormat(undefined,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
+var out=ids.map(function(id,k){return f.format(new Date(t+k*g))});
+$("#msg").textContent="Demo: "+ids.length+" clips would be scheduled on "+$("#ch").value+" at "+out.join(", ")+"."});
+})();
+</script>
 </body>
 </html>
