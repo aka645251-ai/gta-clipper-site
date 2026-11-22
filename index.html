@@ -10,97 +10,99 @@
 :root{--bg:#090B0E;--s:#10141A;--s2:#171C23;--ln:#232A33;--tx:#ECEFF3;--mu:#98A2B0;--a:#4BE3A0;--ink:#04150D;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;position:relative}
-body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-background:radial-gradient(900px 420px at 50% -80px,#4BE3A026,transparent 70%),radial-gradient(circle,#ffffff0d 1px,transparent 1.5px) 0 0/26px 26px}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(900px 420px at 50% -80px,#4BE3A024,transparent 70%),radial-gradient(circle,#ffffff0d 1px,transparent 1.5px) 0 0/26px 26px}
 [hidden]{display:none!important}
 header,main{position:relative;z-index:1}
-header{display:flex;align-items:center;gap:16px;padding:18px 32px;border-bottom:1px solid var(--ln);background:#090B0ECC;backdrop-filter:blur(8px)}
-.logo{font-weight:800;font-size:18px;letter-spacing:-.3px;flex:1}.logo b{color:var(--a)}
+header{display:flex;align-items:center;gap:20px;padding:16px 32px;border-bottom:1px solid var(--ln);background:#090B0ECC;backdrop-filter:blur(8px)}
+.logo{font-weight:800;font-size:18px;letter-spacing:-.3px}.logo b{color:var(--a)}
+nav{display:flex;gap:4px;flex:1}nav a{color:var(--mu);text-decoration:none;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:500}nav a.on{color:#fff;background:var(--s2)}
 .av{width:36px;height:36px;border-radius:50%;background:var(--s2);border:1px solid var(--ln);display:grid;place-items:center;font-weight:600;font-size:13px}
-main{max-width:1060px;margin:0 auto;padding:0 24px 60px}
-button,input,select{font:inherit;color:inherit}
-input,select{background:#0B0E12;border:1px solid var(--ln);border-radius:12px;padding:0 14px;min-height:48px;width:100%}
-input::placeholder{color:#6F7A89}
+main{max-width:1100px;margin:0 auto;padding:0 24px 60px}
+button,input,select,textarea{font:inherit;color:inherit}
+input,select,textarea{background:#0B0E12;border:1px solid var(--ln);border-radius:12px;padding:0 14px;min-height:46px;width:100%}
+textarea{padding:10px 14px;min-height:84px;resize:vertical}
+input::placeholder,textarea::placeholder{color:#6F7A89}
 :focus-visible{outline:2px solid var(--a);outline-offset:2px}
-.btn{min-height:48px;padding:0 22px;border-radius:12px;border:1px solid var(--ln);background:var(--s2);font-weight:600;cursor:pointer}
-.btn:hover{background:#1F252D}
-.btn.pri{background:var(--a);border-color:var(--a);color:var(--ink)}.btn.pri:hover{filter:brightness(1.07)}
+.btn{min-height:46px;padding:0 20px;border-radius:12px;border:1px solid var(--ln);background:var(--s2);font-weight:600;cursor:pointer}
+.btn:hover{background:#1F252D}.btn.pri{background:var(--a);border-color:var(--a);color:var(--ink)}.btn.pri:hover{filter:brightness(1.07)}
 .btn.sm{min-height:40px;padding:0 14px;font-size:14px}
 label,.lb{display:block;font-size:12px;font-weight:500;color:var(--mu);margin-bottom:6px}
-.top{padding:56px 0 8px;text-align:center}
-.top h1{margin:0 auto;max-width:780px;font-size:clamp(32px,5.4vw,56px);line-height:1.06;letter-spacing:-1.5px;font-weight:800}
-.top p{margin:14px auto 0;max-width:520px;color:var(--mu);font-size:16px}
-.comp{margin:32px auto 0;max-width:900px;background:#10141ACC;border:1px solid var(--ln);border-radius:20px;padding:18px;text-align:left;box-shadow:0 30px 80px -30px #000}
+.top{padding:52px 0 8px;text-align:center}
+.top h1{margin:0 auto;max-width:800px;font-size:clamp(32px,5.4vw,56px);line-height:1.06;letter-spacing:-1.5px;font-weight:800}
+.top p{margin:14px auto 0;max-width:540px;color:var(--mu);font-size:16px}
+.comp{margin:30px auto 0;max-width:920px;background:#10141ACC;border:1px solid var(--ln);border-radius:20px;padding:18px;text-align:left;box-shadow:0 30px 80px -30px #000}
 .urlrow{display:flex;gap:10px}.urlrow input{flex:1;min-height:58px;font-size:16px;border-radius:14px}.urlrow .btn{min-height:58px;border-radius:14px;white-space:nowrap}
 .err{color:#FF9B9B;font-size:14px;min-height:20px;margin:8px 4px 0}
 .opts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:6px}
-.seg{display:flex;gap:6px;flex-wrap:wrap}.seg label{margin:0;flex:1}
-.seg input{position:absolute;opacity:0;width:1px;min-height:0}
-.seg span{display:block;text-align:center;padding:12px 8px;border:1px solid var(--ln);border-radius:12px;background:#0B0E12;color:var(--tx);font-size:13px;font-weight:500;cursor:pointer;line-height:1.25}
-.seg input:checked+span{border-color:var(--a);background:#0F2219;color:#fff}
-.seg input:focus-visible+span{outline:2px solid var(--a);outline-offset:2px}
-.sty{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.sty label{margin:0}.sty input{position:absolute;opacity:0;width:1px;min-height:0}
-.sty .c{height:74px;border:1px solid var(--ln);border-radius:12px;background:linear-gradient(#141a22,#0b0e12);display:grid;place-items:center;font-size:15px;cursor:pointer;text-align:center;padding:4px}
+.two{display:grid;grid-template-columns:3fr 2fr;gap:14px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}.seg label{margin:0;flex:1}.seg input{position:absolute;opacity:0;width:1px;min-height:0}
+.seg span{display:block;text-align:center;padding:11px 8px;border:1px solid var(--ln);border-radius:12px;background:#0B0E12;font-size:13px;font-weight:500;cursor:pointer;line-height:1.25}
+.seg input:checked+span{border-color:var(--a);background:#0F2219;color:#fff}.seg input:focus-visible+span{outline:2px solid var(--a);outline-offset:2px}
+.sty{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.sty label{margin:0}.sty input{position:absolute;opacity:0;width:1px;min-height:0}
+.sty .c{height:66px;border:1px solid var(--ln);border-radius:12px;background:linear-gradient(#141a22,#0b0e12);display:grid;place-items:center;font-size:15px;cursor:pointer;text-align:center;padding:4px}
 .sty small{display:block;text-align:center;color:var(--mu);font-size:12px;margin-top:6px}
-.sty input:checked+.c{border-color:var(--a);box-shadow:0 0 0 1px var(--a)}
-.sty input:focus-visible+.c{outline:2px solid var(--a);outline-offset:2px}
-.g{margin-top:16px}
-fieldset{border:0;margin:0;padding:0;min-width:0}
-fieldset:disabled{opacity:.55}
-/* empty hero */
-.show{display:flex;justify-content:center;gap:28px;padding:56px 0 24px;perspective:900px}
+.sty input:checked+.c{border-color:var(--a);box-shadow:0 0 0 1px var(--a)}.sty input:focus-visible+.c{outline:2px solid var(--a);outline-offset:2px}
+.g{margin-top:16px}fieldset{border:0;margin:0;padding:0;min-width:0}fieldset:disabled{opacity:.55}
+.show{display:flex;justify-content:center;gap:28px;padding:52px 0 24px}
 .ph{width:170px;aspect-ratio:9/16;border-radius:22px;background:#0A0C0F;border:1px solid #2B333E;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 30px 60px -20px #000}
 .ph:nth-child(1){transform:rotate(-5deg) translateY(16px)}.ph:nth-child(3){transform:rotate(5deg) translateY(16px)}.ph:nth-child(2){transform:translateY(-8px) scale(1.06)}
-.ph .f{flex:0 0 34%;background:#1D242E;display:grid;place-items:center;font-size:11px;color:#8A95A4}
-.ph .gm{flex:1;background:#141920;display:grid;place-items:center;font-size:11px;color:#707B8A}
-.ph .cp{position:absolute;left:8px;right:8px;bottom:22px;text-align:center;font-weight:800;font-size:14px;text-shadow:0 2px 6px #000}
-.ph .cp em{font-style:normal;color:var(--a)}
+.ph .f{flex:0 0 34%;background:#1D242E;display:grid;place-items:center;font-size:11px;color:#8A95A4}.ph .gm{flex:1;background:#141920;display:grid;place-items:center;font-size:11px;color:#707B8A}
+.ph .cp{position:absolute;left:8px;right:8px;bottom:22px;text-align:center;font-weight:800;font-size:14px;text-shadow:0 2px 6px #000}.ph .cp em{font-style:normal;color:var(--a)}
 .how{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:8px 0}
-.how div{background:#10141AAA;border:1px solid var(--ln);border-radius:16px;padding:20px}
-.how b{display:block;font-size:13px;color:var(--a);margin-bottom:6px}.how h3{margin:0 0 6px;font-size:17px}.how p{margin:0;color:var(--mu);font-size:14px}
-/* run */
-.run{max-width:640px;margin:48px auto 0}
-.run h2{margin:0 0 6px;font-size:24px;letter-spacing:-.5px}.sub{color:var(--mu);font-size:14px;word-break:break-all}
+.how div{background:#10141AAA;border:1px solid var(--ln);border-radius:16px;padding:20px}.how b{display:block;font-size:13px;color:var(--a);margin-bottom:6px}.how h3{margin:0 0 6px;font-size:17px}.how p{margin:0;color:var(--mu);font-size:14px}
+.run{max-width:640px;margin:48px auto 0}.run h2{margin:0 0 6px;font-size:24px;letter-spacing:-.5px}.sub{color:var(--mu);font-size:14px;word-break:break-all}
 .bar{height:6px;background:var(--ln);border-radius:3px;margin:24px 0 18px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--a);transition:width .6s}
-.st{list-style:none;margin:0;padding:0}
-.st li{display:flex;align-items:center;gap:12px;padding:9px 0;color:#6F7A89}
+.st{list-style:none;margin:0;padding:0}.st li{display:flex;align-items:center;gap:12px;padding:9px 0;color:#6F7A89}
 .st li::before{content:"";width:18px;height:18px;border-radius:50%;border:2px solid #333B46;flex:none}
 .st li.act{color:var(--tx);font-weight:600}.st li.act::before{border-color:var(--a);border-top-color:transparent;animation:sp 1s linear infinite}
 .st li.ok{color:var(--mu)}.st li.ok::before{background:var(--a);border-color:var(--a)}
 @keyframes sp{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.st li.act::before{animation:none}.bar i{transition:none}}
-/* results */
 .rh{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;padding:40px 0 20px}
 .rh>div{flex:1;min-width:240px}.rh h2{margin:0;font-size:30px;letter-spacing:-.8px;line-height:1.1}.rh p{margin:6px 0 0;color:var(--mu);font-size:14px}
 .tag{display:inline-block;font-size:11px;font-weight:600;color:#F2C14E;border:1px solid #4A3F1E;border-radius:6px;padding:1px 8px;margin-left:8px;vertical-align:middle}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(224px,1fr));gap:18px;padding-bottom:140px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
 .clip{background:var(--s);border:1px solid var(--ln);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
 .clip.sel{border-color:var(--a);box-shadow:0 0 0 1px var(--a)}
 .th{position:relative;aspect-ratio:9/13;background:#0A0C0F;display:flex;flex-direction:column}
-.th .f{flex:0 0 34%;background:#1D242E;display:grid;place-items:center;font-size:12px;color:#8A95A4}
-.th .gm{flex:1;background:#141920;display:grid;place-items:center;font-size:12px;color:#707B8A}
-.th .c{position:absolute;left:12px;right:12px;bottom:16px;text-align:center;font-weight:800;font-size:18px;text-shadow:0 2px 8px #000}
+.a11 .th{aspect-ratio:1/1.05}.a169 .th{aspect-ratio:16/10}
+.th .f{flex:0 0 34%;background:#1D242E;display:grid;place-items:center;font-size:12px;color:#8A95A4}.th .gm{flex:1;background:#141920;display:grid;place-items:center;font-size:12px;color:#707B8A}
+.th .c{position:absolute;left:12px;right:12px;bottom:14px;text-align:center;font-weight:800;font-size:17px;text-shadow:0 2px 8px #000}
+.th .hk{position:absolute;left:12px;right:12px;top:42px;text-align:center;font-weight:700;font-size:13px;background:#FFFFFFEE;color:#0A0C0F;border-radius:8px;padding:5px 8px}
 .pill{position:absolute;top:10px;background:#000C;border-radius:8px;padding:2px 9px;font-size:12px;font-weight:700}.pill.r{left:10px}.pill.d{right:10px}
-.ck{position:absolute;left:10px;bottom:70px;width:26px;height:26px;accent-color:var(--a);min-height:0;padding:0}
-.mt{padding:14px;display:grid;gap:8px}.mt h3{margin:0;font-size:15px;line-height:1.35}
-.sc{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--mu)}
-.sc b{background:var(--a);color:var(--ink);border-radius:6px;padding:1px 8px}.sc b.m{background:#F2C14E}.sc b.l{background:#B7C0CC}
+.ck{position:absolute;left:10px;bottom:62px;width:26px;height:26px;accent-color:var(--a);min-height:0;padding:0}
+.mt{padding:14px;display:grid;gap:10px}.mt h3{margin:0;font-size:15px;line-height:1.35}
+.sc{display:flex;gap:10px;align-items:center}.sc .n{min-width:46px;text-align:center;font-weight:800;font-size:20px;border-radius:10px;padding:2px 0;background:var(--a);color:var(--ink)}.sc .n.m{background:#F2C14E}.sc .n.l{background:#B7C0CC}
+.sc small{color:var(--mu);font-size:12px;line-height:1.2}
+.bb{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px}
+.bb div{display:grid;grid-template-columns:44px 1fr 24px;gap:6px;align-items:center;font-size:11px;color:var(--mu)}
+.bb s{height:4px;border-radius:2px;background:var(--ln);display:block;overflow:hidden;text-decoration:none}.bb s i{display:block;height:100%;background:var(--a)}
+.bb em{font-style:normal;text-align:right;color:var(--tx)}
 .hs{color:#8CC4FF;font-size:12px;margin:0}
+details.tr summary{cursor:pointer;color:var(--mu);font-size:13px}details.tr p{margin:6px 0 0;font-size:13px;color:#B9C2CF}
 .bt{display:flex;gap:8px}.bt .btn{flex:1;min-height:40px;padding:0 10px;font-size:14px}
+.qs{margin-top:34px;padding-bottom:150px}.qs h2{font-size:20px;margin:0 0 12px}
+.qt{width:100%;border-collapse:collapse;background:var(--s);border:1px solid var(--ln);border-radius:14px;overflow:hidden}
+.qt th{text-align:left;font-size:12px;color:var(--mu);font-weight:500;padding:12px 16px}.qt td{padding:12px 16px;border-top:1px solid var(--ln);font-size:14px}
+.chip{display:inline-block;font-size:12px;font-weight:600;border-radius:6px;padding:2px 10px;border:1px solid}
+.chip.ok{color:#7FE3B4;border-color:#1F5A41;background:#0F261C}.chip.warn{color:#F2C14E;border-color:#4A3F1E;background:#221C0C}.chip.pub{color:#8CC4FF;border-color:#24507E;background:#0E2133}
+.scroll{overflow-x:auto}
 .dock{position:fixed;left:0;right:0;bottom:0;z-index:5;background:#0E1116F2;border-top:1px solid var(--ln);padding:14px 24px}
-.dk{max-width:1060px;margin:0 auto;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
-.dk>div{min-width:150px;flex:1}.dk .n{flex:0 0 auto;font-weight:600;padding-bottom:12px}
-.msg{max-width:1060px;margin:10px auto 0;font-size:14px;color:var(--a);min-height:20px}
-@media (max-width:760px){header{padding:14px 18px}.top{padding-top:36px}.urlrow{flex-direction:column}.opts,.sty{grid-template-columns:1fr 1fr}.how{grid-template-columns:1fr}.show{gap:10px}.ph{width:30vw}.dock{padding:12px 16px}}
+.dk{max-width:1100px;margin:0 auto;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}.dk>div{min-width:140px;flex:1}.dk .n{flex:0 0 auto;font-weight:600;padding-bottom:12px;min-width:0}
+.msg{max-width:1100px;margin:10px auto 0;font-size:14px;color:var(--a);min-height:20px}
+dialog{background:var(--s);color:var(--tx);border:1px solid var(--ln);border-radius:18px;padding:22px;width:min(520px,92vw)}
+dialog::backdrop{background:#000A}
+dialog h3{margin:0 0 14px;font-size:20px}dialog .f{display:grid;gap:12px}dialog .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+dialog .ft{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+@media (max-width:780px){header{padding:12px 16px;gap:10px}nav a{padding:8px}.top{padding-top:34px}.urlrow{flex-direction:column}.opts,.sty{grid-template-columns:1fr 1fr}.two{grid-template-columns:1fr}.how{grid-template-columns:1fr}.show{gap:10px}.ph{width:30vw}.dock{padding:12px 16px}}
 </style>
 </head>
 <body>
-<header><div class="logo">gta<b>-</b>clipper</div><div class="av" aria-label="Account">A</div></header>
+<header><div class="logo">gta<b>-</b>clipper</div><nav aria-label="Main"><a class="on" href="#">Create</a><a href="#">Library</a><a href="#">Schedule</a></nav><div class="av" aria-label="Account">A</div></header>
 <main>
 <section class="top">
 <h1>Turn any stream into ready-to-post clips.</h1>
-<p>Paste a YouTube link, pick the look, and get captioned vertical clips ready to schedule.</p>
+<p>Paste a YouTube link, pick the look, then edit, schedule or publish your best moments.</p>
 <form class="comp" id="f" novalidate>
 <fieldset id="fs">
 <div class="urlrow">
@@ -109,11 +111,15 @@ fieldset:disabled{opacity:.55}
 <button class="btn pri" type="submit">Start clipping</button>
 </div>
 <div class="err" id="err" role="alert"></div>
-<div class="lb">Layout</div>
-<div class="seg" id="lay">
+<div class="two">
+<div><div class="lb">Layout</div><div class="seg">
 <label><input type="radio" name="lay" value="Facecam on top" checked><span>Facecam on top<br>gameplay below</span></label>
-<label><input type="radio" name="lay" value="Gameplay only"><span>Gameplay only<br>full screen</span></label>
-<label><input type="radio" name="lay" value="Auto layout"><span>Auto<br>AI decides</span></label>
+<label><input type="radio" name="lay" value="Gameplay only"><span>Gameplay only</span></label>
+<label><input type="radio" name="lay" value="Auto layout"><span>Auto<br>AI decides</span></label></div></div>
+<div><div class="lb">Aspect ratio</div><div class="seg">
+<label><input type="radio" name="asp" value="9:16" checked><span>9:16</span></label>
+<label><input type="radio" name="asp" value="1:1"><span>1:1</span></label>
+<label><input type="radio" name="asp" value="16:9"><span>16:9</span></label></div></div>
 </div>
 <div class="opts g">
 <div><label for="len">Clip length</label><select id="len"><option>30-40 seconds</option><option>40-60 seconds</option><option>20-30 seconds</option></select></div>
@@ -131,6 +137,10 @@ fieldset:disabled{opacity:.55}
 <label><input type="radio" name="sty" value="Minimal"><span class="c" style="font-size:13px;font-weight:500">no way that worked</span><small>Minimal</small></label>
 <label><input type="radio" name="sty" value="No captions"><span class="c" style="color:#6F7A89;font-size:13px">No captions</span><small>None</small></label>
 </div>
+<div class="opts g" style="grid-template-columns:repeat(2,1fr)">
+<label style="display:flex;gap:10px;align-items:center;margin:0;font-size:14px;color:var(--tx)"><input id="hook" type="checkbox" checked style="width:20px;min-height:0;accent-color:#4BE3A0"> Add a hook title to the first seconds</label>
+<label style="display:flex;gap:10px;align-items:center;margin:0;font-size:14px;color:var(--tx)"><input id="brl" type="checkbox" style="width:20px;min-height:0;accent-color:#4BE3A0"> Add B-roll cutaways (stock)</label>
+</div>
 </fieldset>
 </form>
 </section>
@@ -143,86 +153,124 @@ fieldset:disabled{opacity:.55}
 </div>
 <div class="how">
 <div><b>1</b><h3>Paste the link</h3><p>Any ended, public stream. Very long streams are read one section at a time.</p></div>
-<div><b>2</b><h3>Best moments found</h3><p>Captions and chat spikes are ranked, then AI picks the top moments.</p></div>
-<div><b>3</b><h3>Schedule in bulk</h3><p>Pick a channel and a time gap. Clips upload private and publish on schedule.</p></div>
+<div><b>2</b><h3>Best moments found</h3><p>Captions and chat spikes are ranked, scored on hook, flow, value and trend.</p></div>
+<div><b>3</b><h3>Edit, schedule, publish</h3><p>Fix titles, trim, then schedule in bulk, publish now, or keep private.</p></div>
 </div>
 </section>
 
 <section id="run" hidden>
-<div class="run">
-<h2>Working on your clips</h2><div class="sub" id="src"></div>
+<div class="run"><h2>Working on your clips</h2><div class="sub" id="src"></div>
 <div class="bar" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="pb"></i></div>
-<ul class="st" id="steps" aria-live="polite"></ul>
-</div>
+<ul class="st" id="steps" aria-live="polite"></ul></div>
 </section>
 
 <section id="res" hidden>
-<div class="rh">
-<div><h2 id="rt"></h2><p id="rs"></p></div>
-<button class="btn sm" id="all" type="button">Select all</button>
-<button class="btn sm" id="again" type="button">Clear</button>
-</div>
+<div class="rh"><div><h2 id="rt"></h2><p id="rs"></p></div>
+<button class="btn sm" id="all" type="button">Select all</button><button class="btn sm" id="again" type="button">Clear</button></div>
 <div class="grid" id="grid"></div>
+<div class="qs" id="qs" hidden><h2>Upload queue</h2><div class="scroll"><table class="qt"><thead><tr><th>Clip</th><th>Channel</th><th>When</th><th>Status</th><th></th></tr></thead><tbody id="qb"></tbody></table></div></div>
 </section>
 </main>
 
 <div class="dock" id="dock" hidden>
 <div class="dk">
 <div class="n" id="sn"></div>
-<div><label for="t0">First publish</label><input id="t0" type="datetime-local"></div>
-<div><label for="gap">Gap between clips</label><select id="gap"><option value="1">1 hour</option><option value="2" selected>2 hours</option><option value="4">4 hours</option><option value="24">1 day</option></select></div>
+<div><label for="vis">Visibility</label><select id="vis"><option value="s">Schedule</option><option value="p">Publish now (public)</option><option value="v">Upload as private</option></select></div>
+<div id="wt"><label for="t0">First publish</label><input id="t0" type="datetime-local"></div>
+<div id="wg"><label for="gap">Gap between clips</label><select id="gap"><option value="1">1 hour</option><option value="2" selected>2 hours</option><option value="4">4 hours</option><option value="24">1 day</option></select></div>
 <button class="btn pri" id="sch" type="button">Schedule uploads</button>
 </div>
 <div class="msg" id="msg" role="status"></div>
 </div>
 
+<dialog id="ed" aria-labelledby="edh">
+<form method="dialog" id="edf">
+<h3 id="edh">Edit clip</h3>
+<div class="f">
+<div><label for="e1">Title</label><input id="e1" maxlength="100"></div>
+<div><label for="e2">Hook text (first 3 seconds)</label><input id="e2" maxlength="60"></div>
+<div><label for="e3">Hashtags</label><input id="e3"></div>
+<div class="row"><div><label for="e4">Trim start (s)</label><input id="e4" type="number" min="0" step="0.5"></div><div><label for="e5">Trim end (s)</label><input id="e5" type="number" min="0" step="0.5"></div></div>
+</div>
+<div class="ft"><button class="btn" value="x" type="submit">Cancel</button><button class="btn pri" id="esave" value="ok" type="submit">Save changes</button></div>
+</form>
+</dialog>
+
 <script>
 (function(){
 var $=function(s){return document.querySelector(s)};
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","'":&quot;","'":"&#39;"}[c]})}
 var DEMO=[
-["He did NOT expect that landing","No way that worked","0:34",9.4,"#gta6 #insane #shorts"],
-["Police chase goes completely wrong","Oh no no no","0:38",9.1,"#gta6 #chase #funny"],
-["The stream chat lost it here","Chat is going crazy","0:31",8.7,"#gta6 #clutch #gaming"],
-["Best heist moment so far","We are so cooked","0:40",8.2,"#gta6 #heist #viral"],
-["Nobody saw this coming","Wait what is that","0:36",7.6,"#gta6 #plot #shorts"],
-["Funniest crash of the night","That was so close","0:33",6.9,"#gta6 #crash #lol"]];
+{t:"He did NOT expect that landing",h:"No way that worked",d:34,s:94,g:"#gta6 #insane #shorts",tr:"Okay okay okay, watch this. No way. There is no way that landed. Chat, did you see that?",b:[96,92,90,98]},
+{t:"Police chase goes completely wrong",h:"POV: the chase ends badly",d:38,s:91,g:"#gta6 #chase #funny",tr:"They are right behind me, I am turning here, oh no no no, that was the wrong street.",b:[93,88,89,94]},
+{t:"The stream chat lost it here",h:"Chat is going crazy",d:31,s:87,g:"#gta6 #clutch #gaming",tr:"Wait, wait, look at chat right now. Everyone is typing the same thing. This is insane.",b:[90,84,85,89]},
+{t:"Best heist moment so far",h:"This plan should not work",d:40,s:82,g:"#gta6 #heist #viral",tr:"Alright, here is the plan. We go in quiet, grab it and leave before the alarm. Easy.",b:[84,80,82,81]},
+{t:"Nobody saw this coming",h:"Wait, what is that?",d:36,s:76,g:"#gta6 #plot #shorts",tr:"Hold on, what is that over there? Is that part of the mission or is it a glitch?",b:[78,74,75,77]},
+{t:"Funniest crash of the night",h:"That was so close",d:33,s:69,g:"#gta6 #crash #lol",tr:"I had it. I actually had it. Why is the wall there. Who put the wall there.",b:[70,66,72,68]}];
 var STEPS=["Reading captions and chat","Ranking the top moments","Cutting the clips","Adding layout and captions","Ready"];
-var sel={},timer=null;
+var sel={},Q=[],timer=null,asp="9:16",editing=-1;
 function pane(id){["empty","run","res"].forEach(function(p){$("#"+p).hidden=p!==id});if(id!=="res")$("#dock").hidden=true}
 function okUrl(u){try{var h=new URL(u).hostname;return["youtube.com","www.youtube.com","m.youtube.com","youtu.be"].indexOf(h)>-1}catch(e){return false}}
 function val(n){var r=document.querySelector('input[name="'+n+'"]:checked');return r?r.value:""}
+function mmss(s){s=Math.round(s);return Math.floor(s/60)+":"+("0"+(s%60)).slice(-2)}
 $("#f").addEventListener("submit",function(e){
 e.preventDefault();var u=$("#url").value.trim();
 if(!okUrl(u)){$("#err").textContent="Paste a full YouTube link, like https://www.youtube.com/watch?v=...";$("#url").focus();return}
-$("#err").textContent="";$("#src").textContent=u;run(u)});
-function run(u){
+$("#err").textContent="";$("#src").textContent=u;run()});
+function run(){
 $("#fs").disabled=true;pane("run");var i=0;
 function paint(){var h="";for(var k=0;k<STEPS.length;k++){h+='<li class="'+(k<i?"ok":k===i?"act":"")+'">'+STEPS[k]+"</li>"}
 $("#steps").innerHTML=h;var p=Math.round(i/(STEPS.length-1)*100);$("#pb").style.width=p+"%";$(".bar").setAttribute("aria-valuenow",p)}
 paint();clearInterval(timer);
-timer=setInterval(function(){i++;paint();if(i>=STEPS.length-1){clearInterval(timer);setTimeout(function(){results(u)},600)}},1500)}
-function results(u){
-sel={};var h="";
-for(var n=0;n<DEMO.length;n++){var d=DEMO[n],c=d[3]>=8.5?"":d[3]>=7?"m":"l";
-h+='<article class="clip" id="c'+n+'"><div class="th"><div class="f">Facecam</div><div class="gm">Gameplay</div><div class="c">'+d[1]+'</div><span class="pill r">#'+(n+1)+'</span><span class="pill d">'+d[2]+'</span><input class="ck" type="checkbox" data-i="'+n+'" aria-label="Select clip '+(n+1)+'"></div><div class="mt"><div class="sc"><b class="'+c+'">'+d[3].toFixed(1)+'</b>Virality score</div><h3>'+d[0]+'</h3><p class="hs">'+d[4]+'</p><div class="bt"><button class="btn" type="button">Edit</button><button class="btn" type="button" aria-label="Download clip '+(n+1)+'">Download</button></div></div></article>'}
-$("#grid").innerHTML=h;
+timer=setInterval(function(){i++;paint();if(i>=STEPS.length-1){clearInterval(timer);setTimeout(results,600)}},1500)}
+function card(n){
+var d=DEMO[n],c=d.s>=85?"":d.s>=72?"m":"l",names=["Hook","Flow","Value","Trend"],bars="";
+for(var k=0;k<4;k++){bars+='<div>'+names[k]+'<s><i style="width:'+d.b[k]+'%"></i></s><em>'+d.b[k]+'</em></div>'}
+var hk=$("#hook").checked?'<div class="hk">'+esc(d.h)+'</div>':"";
+return '<article class="clip'+(sel[n]?" sel":"")+'" id="c'+n+'"><div class="th"><div class="f">Facecam</div><div class="gm">Gameplay</div>'+hk+'<div class="c">'+esc(d.h)+'</div><span class="pill r">#'+(n+1)+'</span><span class="pill d">'+mmss(d.d)+'</span><input class="ck" type="checkbox" data-i="'+n+'"'+(sel[n]?" checked":"")+' aria-label="Select clip '+(n+1)+'"></div><div class="mt"><div class="sc"><div class="n '+c+'">'+d.s+'</div><small>Virality score<br>out of 99</small></div><div class="bb">'+bars+'</div><h3>'+esc(d.t)+'</h3><p class="hs">'+esc(d.g)+'</p><details class="tr"><summary>Transcript</summary><p>'+esc(d.tr)+'</p></details><div class="bt"><button class="btn" type="button" data-edit="'+n+'">Edit</button><button class="btn" type="button" aria-label="Download clip '+(n+1)+'">Download</button></div></div></article>'}
+function draw(){var h="";for(var n=0;n<DEMO.length;n++)h+=card(n);$("#grid").innerHTML=h;$("#grid").className="grid "+(asp==="1:1"?"a11":asp==="16:9"?"a169":"")}
+function results(){
+sel={};asp=val("asp");draw();
 $("#rt").innerHTML=DEMO.length+' clips ready<span class="tag">Demo data</span>';
-$("#rs").textContent=val("lay")+" · "+$("#len").value+" · "+$("#lng").value+" captions · "+val("sty")+" · "+$("#chn").value;
+$("#rs").textContent=[val("lay"),asp,$("#len").value,$("#lng").value+" captions",val("sty"),$("#chn").value].join(" · ");
 $("#fs").disabled=false;pane("res");dock();window.scrollTo({top:$("#res").offsetTop-90,behavior:"smooth"})}
 function dock(){
 var n=Object.keys(sel).filter(function(k){return sel[k]}).length;
 $("#dock").hidden=n===0||$("#res").hidden;$("#sn").textContent=n+" selected";
 for(var i=0;i<DEMO.length;i++){var el=$("#c"+i);if(el)el.classList.toggle("sel",!!sel[i])}$("#msg").textContent=""}
-$("#grid").addEventListener("change",function(e){var t=e.target;if(t.classList.contains("ck")){sel[t.getAttribute("data-i")]=t.checked;dock()}});
-$("#all").addEventListener("click",function(){var b=document.querySelectorAll(".ck"),all=Object.keys(sel).filter(function(k){return sel[k]}).length===b.length;
-for(var i=0;i<b.length;i++){b[i].checked=!all;sel[i]=!all}dock()});
-$("#again").addEventListener("click",function(){clearInterval(timer);sel={};$("#url").value="";$("#fs").disabled=false;pane("empty");window.scrollTo({top:0,behavior:"smooth"})});
+$("#grid").addEventListener("change",function(e){var t=e.target;if(t.classList&&t.classList.contains("ck")){sel[t.getAttribute("data-i")]=t.checked;dock()}});
+$("#grid").addEventListener("click",function(e){var b=e.target.closest("[data-edit]");if(!b)return;
+editing=Number(b.getAttribute("data-edit"));var d=DEMO[editing];
+$("#e1").value=d.t;$("#e2").value=d.h;$("#e3").value=d.g;$("#e4").value=0;$("#e5").value=d.d;$("#ed").showModal()});
+$("#ed").addEventListener("close",function(){
+if($("#ed").returnValue!=="ok"||editing<0)return;
+var d=DEMO[editing],a=Number($("#e4").value)||0,z=Number($("#e5").value)||0;
+d.t=$("#e1").value.trim()||d.t;d.h=$("#e2").value.trim()||d.h;d.g=$("#e3").value.trim();
+if(z>a)d.d=z-a;
+var keep=window.scrollY;draw();dock();window.scrollTo(0,keep);editing=-1});
+$("#all").addEventListener("click",function(){var all=Object.keys(sel).filter(function(k){return sel[k]}).length===DEMO.length;
+for(var i=0;i<DEMO.length;i++)sel[i]=!all;draw();dock()});
+$("#again").addEventListener("click",function(){clearInterval(timer);sel={};Q=[];qdraw();$("#url").value="";$("#fs").disabled=false;pane("empty");window.scrollTo({top:0,behavior:"smooth"})});
+function vis(){var v=$("#vis").value;$("#wt").hidden=v!=="s";$("#wg").hidden=v!=="s";$("#sch").textContent=v==="s"?"Schedule uploads":v==="p"?"Publish now":"Upload as private"}
+$("#vis").addEventListener("change",vis);vis();
+function qdraw(){
+$("#qs").hidden=Q.length===0;var h="";
+Q.forEach(function(q,i){h+='<tr><td>'+esc(q.t)+'</td><td>'+esc(q.ch)+'</td><td>'+esc(q.when)+'</td><td><span class="chip '+q.k+'">'+q.st+'</span></td><td><button class="btn sm" type="button" data-rm="'+i+'" aria-label="Remove from queue">Remove</button></td></tr>'});
+$("#qb").innerHTML=h}
+$("#qb").addEventListener("click",function(e){var b=e.target.closest("[data-rm]");if(!b)return;Q.splice(Number(b.getAttribute("data-rm")),1);qdraw()});
 $("#sch").addEventListener("click",function(){
-var ids=Object.keys(sel).filter(function(k){return sel[k]}).map(Number).sort(),v=$("#t0").value;
-if(!v){$("#msg").textContent="Pick the first publish time.";$("#t0").focus();return}
-var t=new Date(v).getTime(),g=Number($("#gap").value)*3600000,f=new Intl.DateTimeFormat(undefined,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
-var out=ids.map(function(id,k){return f.format(new Date(t+k*g))});
-$("#msg").textContent="Demo: "+ids.length+" clips would be scheduled on "+$("#chn").value+" at "+out.join(", ")+"."});
+var ids=Object.keys(sel).filter(function(k){return sel[k]}).map(Number).sort(),v=$("#vis").value;
+if(!ids.length)return;
+var t=new Date($("#t0").value).getTime(),g=Number($("#gap").value)*3600000,f=new Intl.DateTimeFormat(undefined,{day:"numeric",month:"short",hour:"numeric",minute:"2-digit"});
+if(v==="s"&&!$("#t0").value){$("#msg").textContent="Pick the first publish time.";$("#t0").focus();return}
+ids.forEach(function(id,k){var d=DEMO[id];
+if(v==="s")Q.push({t:d.t,ch:$("#chn").value,when:f.format(new Date(t+k*g)),st:"Scheduled",k:"ok"});
+else if(v==="p")Q.push({t:d.t,ch:$("#chn").value,when:"Now",st:"Publishing",k:"pub"});
+else Q.push({t:d.t,ch:$("#chn").value,when:"Not scheduled",st:"Private",k:"warn"})});
+sel={};draw();dock();qdraw();
+$("#msg").textContent="Demo: "+ids.length+" clip"+(ids.length>1?"s":"")+" added to the upload queue.";
+$("#dock").hidden=false;$("#sn").textContent="0 selected";
+setTimeout(function(){$("#qs").scrollIntoView({behavior:"smooth",block:"center"});$("#dock").hidden=true},700)});
 })();
 </script>
 </body>
